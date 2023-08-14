@@ -9,6 +9,7 @@ services:
     environment:
       APP_DB_NAME: public
       APP_DB_HOST: mysql
+      APP_DB_DATABASE_NAME: public
       APP_DB_USERNAME: admin
       APP_DB_PASSWORD: password
       BUNDLE_PATH: /bundle_data
