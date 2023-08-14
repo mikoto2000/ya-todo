@@ -1,0 +1,67 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .devcontainer/dockerfile/app
+    init: true
+    restart: always
+    environment:
+      APP_DB_NAME: public
+      APP_DB_HOST: mysql
+      APP_DB_USERNAME: admin
+      APP_DB_PASSWORD: password
+      BUNDLE_PATH: /bundle_data
+      TZ: Asia/Tokyo
+    command: ["sleep", "infinity"]
+    ports:
+      # アプリ待ち受けポート
+      - 0.0.0.0:3000:3000
+    volumes:
+      # プロジェクトルート
+      - "./:/work"
+      # bundle
+      - bundle_data:/bundle_data
+    working_dir: /work
+  mysql:
+    image: mysql:8.1
+    restart: always
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - mysql_log:/var/log/mysql
+    environment:
+      MYSQL_DATABASE: public
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      TZ: Asia/Tokyo
+    ports:
+      - 0.0.0.0:3306:3306
+    # ログファイル肥大化を防ぐため、起動するたびにログファイルを削除してから mysqld を起動するようにしている
+    command: >
+      bash -c
+      "rm -f /var/log/mysql/mysql.log > /dev/null
+      && mysqld
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --general-log=true
+      --general-log-file=/var/log/mysql/mysql.log
+      --default-time-zone=Asia/Tokyo"
+  db_logger: # mysql のログを標準出力へ出力するためだけのコンテナ
+    image: alpine
+    init: true
+    restart: always
+    depends_on:
+      - mysql
+    volumes:
+      - mysql_log:/var/log/mysql
+    command: tail -f /var/log/mysql/mysql.log
+
+volumes:
+  bundle_data:
+    driver: local
+  mysql_data:
+    driver: local
+  mysql_log:
+    driver: local
+
