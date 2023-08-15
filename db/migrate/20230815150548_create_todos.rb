@@ -6,7 +6,5 @@ class CreateTodos < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
-
-    add_index :todos, [:name], unique: true
   end
 end
