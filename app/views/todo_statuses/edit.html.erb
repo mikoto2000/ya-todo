@@ -1,0 +1,18 @@
+<h1><%= t("view.edit.title", model: TodoStatus.model_name.human) %></h1>
+<%= render "form", todo_status: @todo_status %>
+
+<br>
+
+<div>
+  <%= link_to t("view.edit.move_to_show", model: TodoStatus.model_name.human), @todo_status %> |
+  <%= link_to t("view.edit.move_to_index", model: TodoStatus.model_name.human.pluralize), todo_statuses_path %>
+</div>
+
+<script type="text/javascript">
+  document.addEventListener('turbo:load', function() {
+    setupTomSelectForSingleSelect();
+  });
+  document.addEventListener('turbo:render', function() {
+    setupTomSelectForSingleSelect();
+  });
+</script>

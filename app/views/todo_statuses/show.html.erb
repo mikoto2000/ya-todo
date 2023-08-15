@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<h1><%= TodoStatus.model_name.human %></h1>
+
+<%= render @todo_status %>
+
+<div>
+  <%= link_to t("view.show.move_to_update", model: TodoStatus.model_name.human), edit_todo_status_path(@todo_status) %> |
+  <%= link_to t("view.show.move_to_index", model: TodoStatus.model_name.human.pluralize), todo_statuses_path %>
+
+  <%= button_to t("helpers.submit.delete"),
+                @todo_status,
+                method: :delete,
+                class: %w[btn btn-primary],
+                data: { turbo_confirm: t("helpers.dialog.delete", id: @todo_status.id) } %>
+</div>
