@@ -11,7 +11,7 @@
         {
             "label": "reset database",
             "type": "shell",
-            "command": "rails db:migrate:reset"
+            "command": "rails db:migrate:reset && rails db:seed"
         }
     ]
 }
