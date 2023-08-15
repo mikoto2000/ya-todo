@@ -25,6 +25,18 @@
       <%= form.text_field :name, class: %w[form-control form-control-sm] %>
     </div>
   </div>
+  <div>
+    <%= form.label Todo.reflect_on_association(:todo_status).foreign_key %>
+    <div class="ps-2">
+      <%= form.collection_select(
+            Todo.reflect_on_association(:todo_status).foreign_key,
+            Todo.reflect_on_association(:todo_status).klass.all,
+            :id,
+            :name,
+            { include_blank: "選択なし" }
+          ) %>
+    </div>
+  </div>
   <%- if request.path_info.include?("edit") %>
   <div>
     <%= form.label :created_at, style: "display: block" %>

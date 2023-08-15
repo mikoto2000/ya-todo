@@ -5,7 +5,7 @@ class TodosController < ApplicationController
   # GET /todos
   def index
     @todos = Todo
-      .all
+      .eager_load(:todo_status)
     @q = @todos.ransack(params[:q])
     @q.sorts = "id asc" if @q.sorts.empty?
     @pagy, @todos = pagy(@q.result, page: params[:page], items: params[:items])
@@ -55,11 +55,12 @@ class TodosController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_todo
       @todo = Todo
+        .eager_load(:todo_status)
         .find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def todo_params
-      params.require(:todo).permit(:name)
+      params.require(:todo).permit(:name, :todo_status_id)
     end
 end

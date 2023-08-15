@@ -31,6 +31,19 @@
           </div>
         </div>
         <div>
+          <%= f.label Todo.reflect_on_association(:todo_status).foreign_key + "_in".to_s %>
+          <div class="ps-2">
+            <%= f.collection_select(
+                  Todo.reflect_on_association(:todo_status).foreign_key + "_in".to_s,
+                  Todo.reflect_on_association(:todo_status).klass.all,
+                  :id,
+                  :name,
+                  {},
+                  { multiple: true }
+                ) %>
+          </div>
+        </div>
+        <div>
           <%= f.label :created_at %>
           <div class="ps-2">
             <%= f.datetime_field :created_at_gteq, class: %w[form-control form-control-sm] %>
@@ -65,6 +78,7 @@
       <thead class="table-light sticky-top">
         <th><%= sort_link(@q, :id, default_order: :asc, class: "d-block") %></th>
         <th><%= sort_link(@q, :name, default_order: :asc, class: "d-block") %></th>
+        <th><%= sort_link(@q, :todo_status_id, default_order: :asc, class: "d-block") %></th>
         <th><%= sort_link(@q, :created_at, default_order: :asc, class: "d-block") %></th>
         <th><%= sort_link(@q, :updated_at, default_order: :asc, class: "d-block") %></th>
         <th><%= t("view.index.operation") %></th>
@@ -78,6 +92,7 @@
           onclick="handleClickListItem(arguments[0], this, '<%= url_target(nil, todo).to_s %>')">
           <td><%= todo.id %></td>
           <td><%= todo.name %></td>
+          <td><%= todo.todo_status.name %></td>
           <td><%= todo.created_at && l(todo.created_at) %></td>
           <td><%= todo.updated_at && l(todo.updated_at) %></td>
           <td>
