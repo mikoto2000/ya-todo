@@ -36,6 +36,15 @@ class TodosControllerTest < ActionDispatch::IntegrationTest
     assert_select "table > tbody > tr > td:nth-of-type(2)", text: todos(:two).name # two
     assert_select "table > tbody > tr > td:nth-of-type(2)", text: todos(:destroy_target).name # destroy_target
   end
+  test "should get index search todo_statuss" do
+    search_ids = [todos(:one).role_id, todos(:two).role_id]
+    get todos_url, params: { q: { todo_status_id_in: search_ids } }
+    assert_response :success
+
+    assert_select "table > tbody > tr", count: 2
+    assert_select "table > tbody > tr > td:nth-of-type(3)", text: @todo.todo_status.name # one
+    assert_select "table > tbody > tr > td:nth-of-type(3)", text: @todo.todo_status.name # two
+  end
 
   test "should get index search created_at single hit" do
     target_datetime = @todo.created_at
@@ -46,7 +55,7 @@ class TodosControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     assert_select "table > tbody > tr", count: 1
-    assert_select "table > tbody > tr > td:nth-of-type(3)", text: I18n.l(target_datetime) # one
+    assert_select "table > tbody > tr > td:nth-of-type(4)", text: I18n.l(target_datetime) # one
   end
 
   test "should get index search created_at, multi hit" do
@@ -59,8 +68,8 @@ class TodosControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     assert_select "table > tbody > tr", count: 2
-    assert_select "table > tbody > tr > td:nth-of-type(3)", text: I18n.l(target_datetime_from) # one
-    assert_select "table > tbody > tr > td:nth-of-type(3)", text: I18n.l(target_datetime_to) # two
+    assert_select "table > tbody > tr > td:nth-of-type(4)", text: I18n.l(target_datetime_from) # one
+    assert_select "table > tbody > tr > td:nth-of-type(4)", text: I18n.l(target_datetime_to) # two
   end
 
   test "should get index search updated_at" do
@@ -72,7 +81,7 @@ class TodosControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     assert_select "table > tbody > tr", count: 1
-    assert_select "table > tbody > tr > td:nth-of-type(4)", text: I18n.l(target_datetime) # one
+    assert_select "table > tbody > tr > td:nth-of-type(5)", text: I18n.l(target_datetime) # one
   end
 
   test "should get index search updated_at, multi hit" do
@@ -85,8 +94,8 @@ class TodosControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     assert_select "table > tbody > tr", count: 2
-    assert_select "table > tbody > tr > td:nth-of-type(4)", text: I18n.l(target_datetime_from) # one
-    assert_select "table > tbody > tr > td:nth-of-type(4)", text: I18n.l(target_datetime_to) # two
+    assert_select "table > tbody > tr > td:nth-of-type(5)", text: I18n.l(target_datetime_from) # one
+    assert_select "table > tbody > tr > td:nth-of-type(5)", text: I18n.l(target_datetime_to) # two
   end
 
   test "should get new" do
@@ -97,7 +106,7 @@ class TodosControllerTest < ActionDispatch::IntegrationTest
   test "should create todo" do
     assert_difference("Todo.count") do
       post todos_url, params: { todo: {
-        name: @todo.name
+        name: @todo.name, todo_status_id: @todo.todo_status_id
       } }
     end
 
@@ -116,7 +125,7 @@ class TodosControllerTest < ActionDispatch::IntegrationTest
 
   test "should update todo" do
     patch todo_url(@todo), params: { todo: {
-      name: @todo.name
+      name: @todo.name, todo_status_id: @todo.todo_status_id
     } }
     assert_redirected_to todo_url(@todo)
   end

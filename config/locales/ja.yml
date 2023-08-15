@@ -69,8 +69,14 @@ ja:
   activerecord:
     models:
       todo: やること
+      todo_status: やることの状態
     attributes:
       todo:
         name: 名前
+        todo_status_id: 状態
+        created_at: 作成日
+        updated_at: 更新日
+      todo_status:
+        name: 状態名
         created_at: 作成日
         updated_at: 更新日

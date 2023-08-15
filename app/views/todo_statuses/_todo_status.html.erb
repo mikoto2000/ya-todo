@@ -1,0 +1,42 @@
+<div id="<%= dom_id todo_status %>">
+  <table class="table table-hover">
+    <tr>
+      <td>
+        <strong>Id:</strong>
+      </td>
+      <td>
+        <%= todo_status.id %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>
+          <%= TodoStatus.human_attribute_name(:name) %>
+        </strong>
+      </td>
+      <td>
+        <%= todo_status.name %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>
+          <%= TodoStatus.human_attribute_name(:created_at) %>
+        </strong>
+      </td>
+      <td>
+        <%= todo_status.created_at && l(todo_status.created_at) %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>
+          <%= TodoStatus.human_attribute_name(:updated_at) %>
+        </strong>
+      </td>
+      <td>
+        <%= todo_status.updated_at && l(todo_status.updated_at) %>
+      </td>
+    </tr>
+  </table>
+</div>

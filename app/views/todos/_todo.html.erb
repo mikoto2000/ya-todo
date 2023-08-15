@@ -21,6 +21,16 @@
     <tr>
       <td>
         <strong>
+          <%= Todo.human_attribute_name(:todo_status_id) %>
+        </strong>
+      </td>
+      <td>
+        <%= todo.todo_status.name %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>
           <%= Todo.human_attribute_name(:created_at) %>
         </strong>
       </td>
