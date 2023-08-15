@@ -66,3 +66,11 @@ ja:
     new:
       title: "%{model}を作成"
       move_to_index: 一覧へ戻る
+  activerecord:
+    models:
+      todo: やること
+    attributes:
+      todo:
+        name: 名前
+        created_at: 作成日
+        updated_at: 更新日

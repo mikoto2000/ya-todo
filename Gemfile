@@ -69,6 +69,7 @@ group :test do
 end
 gem "pagy"
 gem "ransack"
+gem "rails-i18n"
 gem "rubocop", group: "development"
 gem "rubocop-rails", group: "development"
 gem "rubocop-performance", group: "development"
