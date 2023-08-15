@@ -166,7 +166,7 @@
     <%%== pagy_bootstrap_nav(@pagy) %>
     <%%== pagy_items_selector_js(@pagy, item_name: "<%= human_name %>".pluralize(@pagy.count), pagy_id: "pagy-items-selector") %>
     <%%= link_to(
-          t("view.index.update_item_per_page", model: "<%= human_name %>"),
+          t("view.index.update_item_per_page", model: <%= class_name %>.model_name.human),
           "javascript:void(0);",
           onClick: "updateItemPerPage(arguments[0],
           this)"
