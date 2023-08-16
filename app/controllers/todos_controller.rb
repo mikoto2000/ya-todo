@@ -51,6 +51,19 @@ class TodosController < ApplicationController
     redirect_to todos_url, notice: t("controller.destroy.success", model: Todo.model_name.human)
   end
 
+  # POST /todo_bulk_insert
+  def bulk_insert
+    errors = Todo.csv_import(params[:file])
+
+    if errors.empty?
+      flash.notice = t("controller.create.success", model: Todo.model_name.human)
+    else
+      flash.alert = errors
+    end
+
+    redirect_to todos_url
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
