@@ -1,52 +1,50 @@
-<div id="<%= dom_id todo %>">
-  <table class="table table-hover">
-    <tr>
-      <td>
-        <strong>Id:</strong>
-      </td>
-      <td>
-        <%= todo.id %>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>
-          <%= Todo.human_attribute_name(:name) %>
-        </strong>
-      </td>
-      <td>
-        <%= todo.name %>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>
-          <%= Todo.human_attribute_name(:todo_status_id) %>
-        </strong>
-      </td>
-      <td>
-        <%= todo.todo_status.name %>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>
-          <%= Todo.human_attribute_name(:created_at) %>
-        </strong>
-      </td>
-      <td>
-        <%= todo.created_at && l(todo.created_at) %>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>
-          <%= Todo.human_attribute_name(:updated_at) %>
-        </strong>
-      </td>
-      <td>
-        <%= todo.updated_at && l(todo.updated_at) %>
-      </td>
-    </tr>
-  </table>
-</div>
+<table class="table table-hover">
+  <tr>
+    <td>
+      <strong>Id:</strong>
+    </td>
+    <td>
+      <%= todo.id %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>
+        <%= Todo.human_attribute_name(:name) %>
+      </strong>
+    </td>
+    <td>
+      <%= todo.name %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>
+        <%= Todo.human_attribute_name(:todo_status_id) %>
+      </strong>
+    </td>
+    <td>
+      <%= todo.todo_status.name %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>
+        <%= Todo.human_attribute_name(:created_at) %>
+      </strong>
+    </td>
+    <td>
+      <%= todo.created_at && l(todo.created_at) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>
+        <%= Todo.human_attribute_name(:updated_at) %>
+      </strong>
+    </td>
+    <td>
+      <%= todo.updated_at && l(todo.updated_at) %>
+    </td>
+  </tr>
+</table>
