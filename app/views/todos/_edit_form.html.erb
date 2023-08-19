@@ -1,0 +1,54 @@
+<%= form_with(model: todo, html: { class: %w[form-control form-control-sm] }) do |form| -%>
+  <%- if todo.errors.any? -%>
+  <div class="alert alert-dismissible" style="color: red">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <h2><%= t("errors.template.header", model: Todo.model_name.human, count: todo.errors.count) %></h2>
+
+    <ul>
+    <% todo.errors.each do |error| %>
+      <li><%= error.full_message %></li>
+    <%- end -%>
+    </ul>
+  </div>
+  <%- end -%>
+
+  <div>
+    <%= form.label :id, style: "display: block" %>
+    <div class="ps-2">
+      <%= form.number_field :id, class: %w[form-control form-control-sm], disabled: true %>
+    </div>
+  </div>
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <div class="ps-2">
+      <%= form.text_field :name, class: %w[form-control form-control-sm] %>
+    </div>
+  </div>
+  <div>
+    <%= form.label Todo.reflect_on_association(:todo_status).foreign_key %>
+    <div class="ps-2">
+      <%= form.collection_select(
+            Todo.reflect_on_association(:todo_status).foreign_key,
+            Todo.reflect_on_association(:todo_status).klass.all,
+            :id,
+            :name,
+            { include_blank: "選択なし" }
+          ) %>
+    </div>
+  </div>
+  <div>
+    <%= form.label :created_at, style: "display: block" %>
+    <div class="ps-2">
+      <%= form.datetime_field :created_at, class: %w[form-control form-control-sm], disabled: true %>
+    </div>
+  </div>
+  <div>
+    <%= form.label :updated_at, style: "display: block" %>
+    <div class="ps-2">
+      <%= form.datetime_field :updated_at, class: %w[form-control form-control-sm], disabled: true %>
+    </div>
+  </div>
+  <div>
+    <%= form.submit class: %w[btn btn-primary] %>
+  </div>
+<% end %>

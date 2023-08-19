@@ -2,11 +2,15 @@
 
   <header class="main-content-header">
 
-    <h1><%= Todo.model_name.human %><%= link_to "", new_todo_path, class: %w[bi bi-plus-circle-fill ms-2] %></h1>
+    <h1><%= Todo.model_name.human %></h1>
 
     <div id="flashes">
       <%= render "flash" %>
     </div>
+
+    <%= turbo_frame_tag "new-todo-container" do %>
+      <%= render "form", todo: Todo.new(name: "", todo_status_id: TodoStatusesHelper::NEW) %>
+    <% end %>
 
     <%= form_tag bulk_insert_todos_path, multipart: true do %>
       <%= label_tag "CSVインポート:" %>
@@ -92,31 +96,8 @@
         <th><%= sort_link(@q, :updated_at, default_order: :asc, class: "d-block") %></th>
         <th><%= t("view.index.operation") %></th>
       </thead>
-      <tbody>
-  <%- @todos.each do |todo| %>
-        <tr
-          tabindex="0"
-          role="button"
-          onkeypress="handleEnterKeypressListIten(arguments[0], this, '<%= url_target(nil, todo).to_s %>')"
-          onclick="handleClickListItem(arguments[0], this, '<%= url_target(nil, todo).to_s %>')">
-          <td><%= todo.id %></td>
-          <td><%= todo.name %></td>
-          <td><%= todo.todo_status.name %></td>
-          <td><%= todo.created_at && l(todo.created_at) %></td>
-          <td><%= todo.updated_at && l(todo.updated_at) %></td>
-          <td>
-            <%= button_to(
-                  t("helpers.submit.delete"),
-                  todo,
-                  method: :delete,
-                  tabindex: 0,
-                  class: %w[btn btn-primary],
-                  onclick: "handleDeleteListItem(arguments[0], this)",
-                  data: { turbo_confirm: t("helpers.dialog.delete", id: todo.id) }
-                ) %>
-          </td>
-        </tr>
-  <%- end %>
+      <tbody id="todos-tbody">
+      <%= render partial: "list_item", collection: @todos, as: :todo %>
       </tbody>
     </table>
   </div>
@@ -133,12 +114,3 @@
 <% end %>
   </main>
 </div>
-
-<script type="text/javascript">
-  document.addEventListener('turbo:load', function() {
-    setupTomSelectForMultiSelect();
-  });
-  document.addEventListener('turbo:render', function() {
-    setupTomSelectForMultiSelect();
-  });
-</script>

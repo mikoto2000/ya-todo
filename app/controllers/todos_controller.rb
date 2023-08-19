@@ -29,11 +29,7 @@ class TodosController < ApplicationController
   def create
     @todo = Todo.new(todo_params)
 
-    if @todo.save
-      redirect_to @todo, notice: t("controller.create.success", model: Todo.model_name.human)
-    else
-      render :new, status: :unprocessable_entity
-    end
+    render :new, status: :unprocessable_entity unless @todo.save
   end
 
   # PATCH/PUT /todos/1

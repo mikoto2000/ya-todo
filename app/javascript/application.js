@@ -16,3 +16,31 @@ window.clear_form = clear_form;
 window.updateItemPerPage = updateItemPerPage;
 window.handleOnChangePagyItemsSelectorJs = handleOnChangePagyItemsSelectorJs;
 
+document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener('turbo:load', function() {
+
+    const observer = new MutationObserver(function(mutationsList, observer) {
+      for(let mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+          setupTomSelectForMultiSelect();
+        }
+      }
+    });
+
+    if (document.getElementById("new-todo-container")) {
+      observer.observe(document.getElementById("new-todo-container"), { childList: true });
+    }
+
+    setupTomSelectForMultiSelect();
+  });
+  document.addEventListener('turbo:render', function() {
+    setupTomSelectForMultiSelect();
+  });
+  document.addEventListener('turbo:frame-load', function() {
+    setupTomSelectForMultiSelect();
+  });
+  document.addEventListener('turbo:frame-render', function() {
+    setupTomSelectForMultiSelect();
+  });
+
+});

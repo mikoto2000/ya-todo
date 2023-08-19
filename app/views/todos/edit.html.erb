@@ -1,5 +1,5 @@
 <h1><%= t("view.edit.title", model: Todo.model_name.human) %></h1>
-<%= render "form", todo: @todo %>
+<%= render "edit_form", todo: @todo %>
 
 <br>
 
@@ -7,12 +7,3 @@
   <%= link_to t("view.edit.move_to_show", model: Todo.model_name.human), @todo %> |
   <%= link_to t("view.edit.move_to_index", model: Todo.model_name.human.pluralize), todos_path %>
 </div>
-
-<script type="text/javascript">
-  document.addEventListener('turbo:load', function() {
-    setupTomSelectForSingleSelect();
-  });
-  document.addEventListener('turbo:render', function() {
-    setupTomSelectForSingleSelect();
-  });
-</script>

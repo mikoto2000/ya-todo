@@ -1,0 +1,22 @@
+<tr id="<%= dom_id todo %>"
+  tabindex="0"
+  role="button"
+  onkeypress="handleEnterKeypressListIten(arguments[0], this, '<%= url_target(nil, todo).to_s %>')"
+  onclick="handleClickListItem(arguments[0], this, '<%= url_target(nil, todo).to_s %>')">
+  <td><%= todo.id %></td>
+  <td><%= todo.name %></td>
+  <td><%= todo.todo_status.name %></td>
+  <td><%= todo.created_at && l(todo.created_at) %></td>
+  <td><%= todo.updated_at && l(todo.updated_at) %></td>
+  <td>
+    <%= button_to(
+          t("helpers.submit.delete"),
+          todo,
+          method: :delete,
+          tabindex: 0,
+          class: %w[btn btn-primary],
+          onclick: "handleDeleteListItem(arguments[0], this)",
+          data: { turbo_confirm: t("helpers.dialog.delete", id: todo.id) }
+        ) %>
+  </td>
+</tr>

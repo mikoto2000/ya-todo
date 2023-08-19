@@ -1,0 +1,12 @@
+<%# 新規作成フォームのリセット %>
+<%= turbo_stream.update "new-todo-container",
+      partial: "todos/form",
+      locals: { todo: Todo.new(name: "", todo_status_id: 1) } %>
+
+<%# 現在表示されているリストの先頭に追加した要素を挿入 %>
+<%= turbo_stream.prepend "todos-tbody",
+      partial: "todos/list_item",
+      locals: { todo: @todo } %>
+
+<%# Flashを表示 %>
+<%= turbo_stream_flash %>
