@@ -1,3 +1,5 @@
+require "./app/services/csv/todo_csv_parser"
+
 class TodosController < ApplicationController
   include Pagy::Backend
   before_action :set_todo, only: %i[show edit update destroy]
@@ -49,7 +51,7 @@ class TodosController < ApplicationController
 
   # POST /todo_bulk_insert
   def bulk_insert
-    errors = Todo.csv_import(params[:file])
+    errors = Todo.csv_import(params[:file], parser)
 
     if errors.empty?
       flash.notice = t("controller.create.success", model: Todo.model_name.human)
@@ -72,5 +74,9 @@ class TodosController < ApplicationController
     # Only allow a list of trusted parameters through.
     def todo_params
       params.require(:todo).permit(:name, :todo_status_id)
+    end
+
+    def parser
+      Csv::TodoCsvParser
     end
 end

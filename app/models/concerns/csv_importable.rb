@@ -4,17 +4,17 @@ module CsvImportable
   extend ActiveSupport::Concern
 
   module ClassMethods
-    def csv_import(file)
+    def csv_import(file, parser)
       # CSV から目的のモデルインスタンスを生成
-      todos_with_lineno = parse(file)
+      csv_records = parser.new.call(file)
 
       # バリデーションを実行
-      errors = collect_validate_errors(todos_with_lineno)
+      errors = collect_validate_errors(csv_records)
 
       # エラーが無ければ bulk insert 実行
       # rubocop:disable Rails/SkipsModelValidations
       # `collect_validate_errors` にてバリデーション済みなので警告を抑制
-      insert_all(todos_with_lineno.map(&:model)) if errors.empty?
+      insert_all(csv_records.map(&:model)) if errors.empty?
       # rubocop:enable Rails/SkipsModelValidations
 
       errors
@@ -37,41 +37,6 @@ module CsvImportable
       end
 
       errors
-    end
-
-    # CSV ファイルのパースを行い、Hash と行番号をセットにした配列を返却する
-    #
-    # ==== Args:
-    # file(File)::CSVファイル
-    #
-    # ==== Return:
-    # ModelWithLineno インスタンスの配列
-    def parse(file)
-      # 返却用配列
-      models = []
-
-      CSV.open(file.path, headers: true) do |csv|
-        csv.each do |row|
-          # key が header で、 value が CSV に記載された値となる Hash を生成
-          values = csv.headers.to_h do |header, _index|
-            [header, row[header]]
-          end
-
-          # 行番号とセットにして返却用配列へ格納
-          models.append ModelWithLineno.new csv.lineno, values
-        end
-      end
-
-      models
-    end
-  end
-
-  class ModelWithLineno
-    attr_accessor :lineno, :model
-
-    def initialize(lineno, model)
-      @lineno = lineno
-      @model = model
     end
   end
 end
