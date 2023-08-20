@@ -29,7 +29,7 @@ module Csv
       }
     }.freeze
 
-    def initialize(logger = Rails.logger)
+    def initialize(logger = Logger.new($stdin))
       @logger = logger
     end
 

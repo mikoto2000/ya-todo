@@ -6,7 +6,7 @@ module CsvImportable
   module ClassMethods
     def csv_import(file, parser)
       # CSV から目的のモデルインスタンスを生成
-      csv_records = parser.new.call(file)
+      csv_records = parser.new(Rails.logger).call(file)
 
       # バリデーションを実行
       errors = collect_validate_errors(csv_records)
