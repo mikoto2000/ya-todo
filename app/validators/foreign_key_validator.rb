@@ -25,7 +25,7 @@ class ForeignKeyValidator < ActiveModel::Validator
   # - enum_string::取りうる値を表現する文字列
   def validate(record)
     # 指定した値が親エンティティに存在するか確認
-    is_valid = !options[:parent_model_class].find_by(id: record[options[:child_attribute_symbol]]).nil?
+    is_valid = exists_in_parent?(record, options[:parent_model_class], options[:child_attribute_symbol])
 
     # 存在しなければ、エラーメッセージを作成し、追加
     unless is_valid
@@ -42,6 +42,12 @@ class ForeignKeyValidator < ActiveModel::Validator
 
   private
 
+    # 指定した値が親エンティティに存在するか確認
+    def exists_in_parent?(record, parent_model_class, child_attribute_symbol)
+      !parent_model_class.find_by(id: record[child_attribute_symbol]).nil?
+    end
+
+    # エラーメッセージ組み立て
     def error_message(child_model_class, attribute_symbol, enum_string)
       I18n.t(
         MUST_EXIST_IN_MASTER_ID,
