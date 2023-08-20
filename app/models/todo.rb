@@ -12,5 +12,5 @@ class Todo < ApplicationRecord
                  child_model_class: Todo,
                  child_attribute_symbol: :todo_status_id,
                  parent_model_class: TodoStatus,
-                 enum_string: TodoStatus.all.map(&:id)
+                 enum_string: TodoStatus.all.map(&:name)
 end
