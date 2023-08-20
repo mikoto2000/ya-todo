@@ -20,6 +20,9 @@ Bundler.require(*Rails.groups)
 
 module YaTodo
   class Application < Rails::Application
+    config.log_formatter = proc do |severity, datetime, progname, msg|
+      "%s %5s %s --- [%s] %s | %s\n" % [datetime, severity, Process.pid, Thread.current.object_id, progname.nil? ? "core" : progname, msg]
+    end
     config.active_record.default_timezone = :local
     config.time_zone = 'Asia/Tokyo'
     config.i18n.default_locale = :ja
