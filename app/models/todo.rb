@@ -1,6 +1,5 @@
 class Todo < ApplicationRecord
   include CsvImportable
-  include ForeignKeyValidatable
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[name todo_status_id id created_at updated_at]
@@ -9,9 +8,9 @@ class Todo < ApplicationRecord
   belongs_to :todo_status, optional: true
   validates :name, presence: true
   validates :todo_status_id, presence: true
-  validate :todo_status_must_exist_in_master
-
-  def todo_status_must_exist_in_master
-    must_exist_in_master(Todo, TodoStatus, todo_status_id, :todo_status_id)
-  end
+  validates_with ForeignKeyValidator,
+                 child_model_class: Todo,
+                 child_attribute_symbol: :todo_status_id,
+                 parent_model_class: TodoStatus,
+                 enum_string: TodoStatus.all.map(&:id)
 end
