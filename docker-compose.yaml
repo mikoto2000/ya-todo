@@ -38,16 +38,13 @@ services:
       TZ: Asia/Tokyo
     ports:
       - 0.0.0.0:3306:3306
-    # ログファイル肥大化を防ぐため、起動するたびにログファイルを削除してから mysqld を起動するようにしている
     command: >
-      bash -c
-      "rm -f /var/log/mysql/mysql.log > /dev/null
-      && mysqld
+      mysqld
       --character-set-server=utf8mb4
       --collation-server=utf8mb4_unicode_ci
       --general-log=true
       --general-log-file=/var/log/mysql/mysql.log
-      --default-time-zone=Asia/Tokyo"
+      --default-time-zone=Asia/Tokyo
   db_logger: # mysql のログを標準出力へ出力するためだけのコンテナ
     image: alpine
     init: true
@@ -56,7 +53,11 @@ services:
       - mysql
     volumes:
       - mysql_log:/var/log/mysql
-    command: tail -f /var/log/mysql/mysql.log
+    # ログファイル肥大化を防ぐため、起動するたびにログファイルを削除している
+    command: >
+      sh -c
+      "cat /dev/null > /var/log/mysql/mysql.log
+      && tail -f /var/log/mysql/mysql.log"
 
 volumes:
   bundle_data:
