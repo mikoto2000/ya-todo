@@ -21,7 +21,7 @@ class ForeignKeyValidator < ActiveModel::Validator
   # オプション:
   # - child_model_class::子エンティティのクラスオブジェクト
   # - child_attribute_symbol::子エンティティのフィールド名(カラム名)
-  # - parent_model_class:: 親エンティティのクラスオブジェクト
+  # - parent_model_class::親エンティティのクラスオブジェクト
   # - enum_string::取りうる値を表現する文字列
   def validate(record)
     # 指定した値が親エンティティに存在するか確認
