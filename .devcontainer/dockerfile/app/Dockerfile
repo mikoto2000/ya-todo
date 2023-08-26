@@ -6,6 +6,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 
 RUN apt-get install -y git
 
-RUN gem install rails \
+RUN gem install rails solargraph \
     && npm i -g yarn
 
