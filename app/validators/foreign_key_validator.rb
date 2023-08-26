@@ -1,10 +1,10 @@
 # 外部キーで設定した値が存在しているかを検証するバリデーター
 #
 # ==== オプション:
-# - child_model_class::子エンティティのクラスオブジェクト
-# - child_attribute_symbol::子エンティティのフィールド名(カラム名)
+# - child_model_class:: 子エンティティのクラスオブジェクト
+# - child_attribute_symbol:: 子エンティティのフィールド名(カラム名)
 # - parent_model_class:: 親エンティティのクラスオブジェクト
-# - enum_string::取りうる値を表現する文字列
+# - enum_string:: 取りうる値を表現する文字列
 #
 # ==== Example:
 #     # Todo が belongs_to で :todo_status パラメーターを TodoStatus へ外部キー設定を行っている
@@ -19,10 +19,10 @@ class ForeignKeyValidator < ActiveModel::Validator
   # 外部キーで設定した値が存在しているかを検証する
   #
   # オプション:
-  # - child_model_class::子エンティティのクラスオブジェクト
-  # - child_attribute_symbol::子エンティティのフィールド名(カラム名)
-  # - parent_model_class::親エンティティのクラスオブジェクト
-  # - enum_string::取りうる値を表現する文字列
+  # - child_model_class:: 子エンティティのクラスオブジェクト
+  # - child_attribute_symbol:: 子エンティティのフィールド名(カラム名)
+  # - parent_model_class:: 親エンティティのクラスオブジェクト
+  # - enum_string:: 取りうる値を表現する文字列
   def validate(record)
     # 指定した値が親エンティティに存在するか確認
     is_valid = exists_in_parent?(record, options[:parent_model_class], options[:child_attribute_symbol])

@@ -36,7 +36,7 @@ module Csv
     # Todo 用の CSV ファイルのパースを行い、Hash と行番号をセットにした配列を返却する
     #
     # ==== Args:
-    # file(File)::Todo 用 CSV ファイル
+    # file(File):: Todo 用 CSV ファイル
     #
     # ==== Return:
     # CsvRecord インスタンスの配列
@@ -79,8 +79,8 @@ module Csv
       # CSV に記載された値を、各列毎に指定された条件に応じて変換する
       #
       # ==== Args:
-      # header::検索に使用するエンティティのクラスオブジェクト
-      # value::検索に使用するカラム名
+      # header:: 検索に使用するエンティティのクラスオブジェクト
+      # value:: 検索に使用するカラム名
       #
       # ==== Return:
       # id が見つかった場合は id を返却、見つからなかった場合は value をそのまま返却
@@ -100,9 +100,9 @@ module Csv
       # 値を基に関連付けられた外部キーの id を取得する
       #
       # ==== Args:
-      # parent_model_class::検索に使用するエンティティのクラスオブジェクト
-      # search_column_name::検索に使用するカラム名
-      # value::検索に使用する値
+      # parent_model_class:: 検索に使用するエンティティのクラスオブジェクト
+      # search_column_name:: 検索に使用するカラム名
+      # value:: 検索に使用する値
       #
       # ==== Return:
       # id が見つかった場合は id を返却、見つからなかった場合は value をそのまま返却
